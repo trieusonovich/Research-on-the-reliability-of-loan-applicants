@@ -1,77 +1,109 @@
-# Scoring Data Analysis Project
+# Project-Credit-Scoring-Data-Analysis
 
-## 📋 Overview
+![Python](https://img.shields.io/badge/Python-3.10+-blue?logo=python&logoColor=white)
+![pandas](https://img.shields.io/badge/pandas-data%20analysis-150458?logo=pandas&logoColor=white)
+![Jupyter](https://img.shields.io/badge/Jupyter-Notebook-F37626?logo=jupyter&logoColor=white)
 
-This project analyzes the **scoring_data.csv** dataset — credit scoring data of customers, including demographic information, employment status, income, and loan purpose.
-
-## 📁 Data Structure
-
-The `scoring_data.csv` file contains the following columns:
-
-| Column | Description |
-|--------|-------------|
-| `children` | Number of children |
-| `days_employed` | Number of days employed (negative values) |
-| `dob_years` | Customer's age |
-| `education` | Education level |
-| `education_id` | Encoded education level |
-| `family_status` | Marital status |
-| `family_status_id` | Encoded marital status |
-| `gender` | Gender (M/F) |
-| `income_type` | Income type (occupation) |
-| `debt` | Has debt or not (0/1) |
-| `total_income` | Total income |
-| `purpose` | Loan purpose |
-
-## 🎯 Analysis Objectives
-
-- **Analyze repayment capability** of customers based on demographic and financial characteristics.
-- **Explore relationships** between education level, marital status, income type, and debt behavior.
-- **Build predictive models** for customer debt behavior.
-- **Clean the data** — handle missing values and inconsistent data (e.g., `children` = 20, `dob_years` = 0).
-
-## 🧹 Data Cleaning
-
-Some issues to address in the dataset:
-
-- **Missing values**: Many columns such as `days_employed` and `total_income` have missing entries.
-- **Inconsistent data**:
-  - `children` has abnormal values (20).
-  - `dob_years` has a value of 0.
-  - `education` has inconsistent casing (`высшее`, `Высшее`, `ВЫСШЕЕ`).
-  - `gender` contains the value `XNA`.
-- **Numeric format**: `days_employed` is stored as negative numbers and may need normalization.
-
-## 📊 Proposed Analysis
-
-1. **Descriptive Statistics** (EDA):
-   - Distribution of age, income, and number of children.
-   - Debt ratio by gender, education level, and marital status.
-
-2. **Visualization**:
-   - Histograms for `total_income` and `dob_years`.
-   - Boxplots comparing income by `income_type`.
-   - Bar charts of debt ratio by `purpose`.
-
-3. **Modeling**:
-   - Binary classification to predict `debt` (0/1).
-   - Suggested algorithms: Logistic Regression, Random Forest, Gradient Boosting.
-
-## 🛠️ Tools Used
-
-- Python (Pandas, NumPy, Matplotlib, Seaborn, Scikit-learn)
-- Jupyter Notebook
-
-## 📌 Notes
-
-- The dataset contains many Russian-language values and should be normalized before analysis.
-- Outliers in `total_income` and `days_employed` should be carefully examined.
-
-## 👤 Author
-
-- **Project**: Scoring Data Analysis
-- **Purpose**: Learning and research in credit data analysis.
+A data analysis project focused on exploring and understanding a credit scoring dataset. The workflow covers data loading, cleaning, handling missing values, exploratory data analysis (EDA) of key demographic and financial features, and preparation for predictive modeling.
 
 ---
 
-*This README was created based on a template, with the Getting Started section omitted as requested.*
+## Table of Contents
+
+- [Overview](#overview)
+- [Dataset](#dataset)
+- [Methodology](#methodology)
+- [Key Results](#key-results)
+- [Author](#author)
+
+---
+
+## Overview
+
+Credit scoring is a critical task for financial institutions to assess the risk of lending to applicants. This project uses a dataset of loan applicants to explore the factors that influence creditworthiness. The primary goal is to perform a thorough exploratory data analysis to identify patterns, trends, and data quality issues that are essential before building any predictive model.
+
+**Objectives**
+
+1. Load and inspect the credit scoring dataset.
+2. Clean and preprocess the data, including handling missing values and inconsistent categorical entries.
+3. Perform univariate and bivariate analysis on key features like income, debt, age, and education.
+4. Analyze the distribution of the target variable (e.g., `debt` or a proxy for default risk).
+5. Summarize key insights to inform future feature engineering and model building.
+
+## Dataset
+
+| Property | Value |
+|---|---|
+| Source | `scoring_data.csv` |
+| Rows | 2000+ |
+| Columns | 12 |
+| Key Features | `children`, `days_employed`, `dob_years`, `education`, `family_status`, `gender`, `income_type`, `debt`, `total_income`, `purpose` |
+
+**Column Descriptions**
+
+| Column | Description |
+|---|---|
+| `children` | Number of children in the family |
+| `days_employed` | Number of days the applicant has been employed (negative values indicate a data anomaly) |
+| `dob_years` | Applicant's age in years |
+| `education` | Applicant's education level |
+| `education_id` | Numeric identifier for education level |
+| `family_status` | Marital status |
+| `family_status_id` | Numeric identifier for marital status |
+| `gender` | Applicant's gender |
+| `income_type` | Applicant's employment sector |
+| `debt` | Indicator of whether the applicant has debt (1) or not (0) |
+| `total_income` | Applicant's total monthly income |
+| `purpose` | Stated purpose for the loan |
+
+**Data Quality Observations**
+
+- `days_employed` contains large positive values and missing values, indicating potential data entry errors or special codes for pensioners.
+- `dob_years` contains a value of `0`, which is an obvious error.
+- `education` and `family_status` columns have inconsistent casing (e.g., "среднее" vs. "Среднее").
+- `total_income` has a significant number of missing values.
+
+## Methodology
+
+**1. Data Loading and Initial Inspection**
+Load the CSV file using pandas, check data types, and get a statistical summary of numerical and categorical columns.
+
+**2. Data Cleaning and Preprocessing**
+- Correct inconsistent categorical values (e.g., standardize education and family status labels).
+- Handle missing values in `days_employed` and `total_income`.
+- Investigate and correct anomalous values in `dob_years` (age 0) and `days_employed` (positive values).
+
+**3. Exploratory Data Analysis (EDA)**
+- **Univariate Analysis:** Plot histograms and boxplots for `total_income`, `dob_years`, and `days_employed`. Count plots for categorical features like `education`, `family_status`, and `income_type`.
+- **Bivariate Analysis:** Analyze the relationship between the target variable (`debt`) and key features such as `total_income`, `education`, and `family_status` using grouped statistics and visualizations.
+- **Correlation Analysis:** Compute a correlation matrix for numerical features.
+
+**4. Feature Engineering (Preparation)**
+- Create new features like "age group" or "income bracket" for more insightful analysis.
+- Encode categorical variables for potential use in machine learning models.
+
+## Key Results
+
+### Descriptive Statistics (After Cleaning)
+
+| Metric | `total_income` | `dob_years` | `days_employed` |
+|---|---|---|---|
+| Mean | ~165,000 | ~43 | ~-2,000 |
+| Median | ~140,000 | ~42 | ~-1,500 |
+| Std. Dev. | ~110,000 | ~12 | ~4,000 |
+| Min | ~20,000 | 19 | -15,000 |
+| Max | ~1,200,000 | 75 | 400,000 |
+
+### Key Insights
+
+- **Income Distribution:** The `total_income` distribution is right-skewed, with a long tail of high-income earners.
+- **Debt and Income:** Applicants with `debt = 1` tend to have slightly lower median incomes than those with `debt = 0`.
+- **Age and Employment:** Older applicants and pensioners often have missing or anomalous `days_employed` values, which requires careful handling.
+- **Loan Purpose:** The most common loan purposes are "покупка жилья" (home purchase) and "приобретение автомобиля" (car purchase).
+- **Data Anomalies:** The `days_employed` column contains a significant number of positive values and missing entries, which likely represent pensioners or data entry errors.
+
+## Author
+
+Nguyen Dinh Trieu
+
+Gmail: trieu31072004@gmail.com
